@@ -1,0 +1,22 @@
+
+{
+     
+    "resourcePackages": [
+        "${YOUR_ENDPOINT_PACKAGE}"
+    ],
+    "prettyPrint": true,
+    "cacheTTL": 0,
+    "openAPI": {
+        "info": {
+            "version": "",
+            "title": "${YOUR_API_NAME}",
+            "description": "${YOUR_API_DESCRIPTION}"
+        },
+        "servers": [
+            {
+                "url": "${RELATIVE_PATH_TO_API}",
+                "description" : "relative path to base API"
+            }
+        ]
+    }
+}

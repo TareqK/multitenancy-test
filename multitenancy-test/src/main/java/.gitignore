@@ -1,0 +1,7 @@
+/nb-configuration.xml
+/src/main/webapp/.buildconfig
+/src/main/webapp/node_modules/
+/src/main/webapp/node/
+/src/main/webapp/etc/
+/src/main/webapp/dist/
+/src/main/webapp/package-lock.json
