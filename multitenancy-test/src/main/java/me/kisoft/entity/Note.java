@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import lombok.Getter;
 import lombok.Setter;
+import me.kisoft.dao.NoteDao;
+import me.kisoft.dao.Storeable;
 import org.dizitart.no2.objects.Id;
 
 /**
@@ -17,7 +19,7 @@ import org.dizitart.no2.objects.Id;
  */
 @Getter
 @Setter
-public class Note implements Serializable {
+public class Note implements Serializable, Storeable<NoteDao> {
 
   @Id
   private long noteId;
@@ -27,4 +29,9 @@ public class Note implements Serializable {
   private String category;
 
   private ArrayList<Long> relatedNotes;
+
+  @Override
+  public NoteDao getDao() {
+    return new NoteDao();
+  }
 }

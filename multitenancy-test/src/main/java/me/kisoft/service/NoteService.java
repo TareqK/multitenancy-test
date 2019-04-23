@@ -17,7 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
-import me.kisoft.dao.NoteDao;
+import me.kisoft.dao.NitriteDao;
 import me.kisoft.entity.Note;
 import me.kisoft.entity.multitenancy.Secured;
 
@@ -32,7 +32,7 @@ public class NoteService {
   @Produces({MediaType.APPLICATION_JSON})
   @Secured
   public List<Note> listNotes(@Context SecurityContext sc) {
-    return new NoteDao(sc).listNotes();
+    return NitriteDao.of(sc, Note.class).listNotes();
   }
 
   @GET
@@ -40,7 +40,7 @@ public class NoteService {
   @Produces({MediaType.APPLICATION_JSON})
   @Secured
   public Note getNotes(@Context SecurityContext sc, @PathParam("note_id") long noteId) {
-    return new NoteDao(sc).getNoteById(noteId);
+    return NitriteDao.of(sc, Note.class).getNoteById(noteId);
   }
 
   @DELETE
@@ -48,7 +48,7 @@ public class NoteService {
   @Secured
   @Produces({MediaType.APPLICATION_JSON})
   public void deleteNote(@Context SecurityContext sc, @PathParam("note_id") long noteId) {
-    new NoteDao(sc).deleteNote(noteId);
+    NitriteDao.of(sc, Note.class).deleteNote(noteId);
   }
 
   @PUT
@@ -57,7 +57,7 @@ public class NoteService {
   @Produces({MediaType.APPLICATION_JSON})
   @Consumes({MediaType.APPLICATION_JSON})
   public void deleteNote(@Context SecurityContext sc, @PathParam("note_id") long noteId, Note note) {
-    new NoteDao(sc).updateNote(note, noteId);
+    NitriteDao.of(sc, Note.class).updateNote(note, noteId);
   }
 
   @POST
@@ -65,6 +65,6 @@ public class NoteService {
   @Consumes({MediaType.APPLICATION_JSON})
   @Secured
   public void createNote(@Context SecurityContext sc, Note note) {
-    new NoteDao(sc).createNote(note);
+    NitriteDao.of(sc, Note.class).createNote(note);
   }
 }

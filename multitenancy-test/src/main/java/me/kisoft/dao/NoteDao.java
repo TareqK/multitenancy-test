@@ -6,11 +6,8 @@
 package me.kisoft.dao;
 
 import java.util.List;
-import javax.ws.rs.core.SecurityContext;
 import lombok.AllArgsConstructor;
 import me.kisoft.entity.Note;
-import me.kisoft.entity.multitenancy.MultiTenancyUser;
-import me.kisoft.entity.multitenancy.NitriteContext;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 /**
@@ -40,7 +37,4 @@ public class NoteDao extends NitriteDao {
     db.getRepository(Note.class).remove(eq("noteId", noteId));
   }
 
-  public NoteDao(SecurityContext sc) {
-    this.db = NitriteContext.ofUser((MultiTenancyUser) sc.getUserPrincipal()).getPersistenceContext().getDb();
-  }
 }
