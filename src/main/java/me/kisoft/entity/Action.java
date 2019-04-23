@@ -9,8 +9,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import lombok.Getter;
 import lombok.Setter;
-import me.kisoft.dao.NoteDao;
+import me.kisoft.dao.ActionDao;
 import me.kisoft.dao.Storeable;
+import org.dizitart.no2.NitriteId;
 import org.dizitart.no2.objects.Id;
 
 /**
@@ -19,19 +20,21 @@ import org.dizitart.no2.objects.Id;
  */
 @Getter
 @Setter
-public class Note implements Serializable, Storeable<NoteDao> {
+public class Action implements Serializable, Storeable<ActionDao> {
 
   @Id
-  private long noteId;
+  private NitriteId actionId = NitriteId.newId();
 
   private String content;
 
   private String category;
 
-  private ArrayList<Long> relatedNotes;
+  private ArrayList<Long> relatedActions;
+
+  private long issueId;
 
   @Override
-  public NoteDao getDao() {
-    return new NoteDao();
+  public ActionDao getDao() {
+    return new ActionDao();
   }
 }

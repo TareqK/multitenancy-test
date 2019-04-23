@@ -6,11 +6,13 @@
 package me.kisoft.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.kisoft.dao.BoxDao;
+import me.kisoft.dao.IssueDao;
 import me.kisoft.dao.Storeable;
+import org.dizitart.no2.NitriteId;
 import org.dizitart.no2.objects.Id;
 
 /**
@@ -20,16 +22,18 @@ import org.dizitart.no2.objects.Id;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Box implements Serializable, Storeable<BoxDao> {
+public class Issue implements Serializable, Storeable<IssueDao> {
 
   @Id
-  private long boxId;
+  private NitriteId IssueId;
 
-  private String boxContent;
+  private EisenhowerStatus currentStatus;
+
+  private ArrayList<Action> actions;
 
   @Override
-  public BoxDao getDao() {
-    return new BoxDao();
+  public IssueDao getDao() {
+    return new IssueDao();
   }
 
 }
