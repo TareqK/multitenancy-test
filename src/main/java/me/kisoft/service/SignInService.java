@@ -17,15 +17,16 @@ import me.kisoft.entity.multitenancy.MultiTenancyUser;
  *
  * @author tareq
  */
-@Path("auth")
-public class AuthService {
+@Path("signin")
+public class SignInService {
 
   @POST
   @Produces({MediaType.APPLICATION_JSON})
   @Consumes({MediaType.APPLICATION_JSON})
   public MultiTenancyUser login(MultiTenancyUser user) {
     try (MultiTenancyUserDao dao = new MultiTenancyUserDao()) {
-      return dao.login(user);
+      return dao.signin(user);
     }
   }
+
 }

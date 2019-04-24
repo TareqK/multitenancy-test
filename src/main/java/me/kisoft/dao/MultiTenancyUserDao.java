@@ -11,6 +11,7 @@ import javax.ws.rs.WebApplicationException;
 import me.kisoft.entity.multitenancy.MultiTenancyUser;
 import me.kisoft.utils.EntityManagerFactoryWrapper;
 import me.kisoft.utils.Random;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -25,17 +26,35 @@ public class MultiTenancyUserDao implements AutoCloseable {
     em.close();
   }
 
-  public MultiTenancyUser login(MultiTenancyUser user) {
+  public MultiTenancyUser signin(MultiTenancyUser user) {
     em.getTransaction().begin();
     try {
-      MultiTenancyUser foundUser = em.createNamedQuery("MultiTenancyUser.login", MultiTenancyUser.class)
-        .setParameter("username", user.getUsername())
-        .setParameter("password", user.getPassword())
-        .getSingleResult();
-      foundUser.setToken(Random.randomToken(30));
-      return foundUser;
+      MultiTenancyUser foundUser = getUserByUsername(user.getUsername());
+      if (BCrypt.checkpw(user.getPassword(), foundUser.getPassword())) {
+        foundUser.setToken(Random.randomToken(30));
+        return foundUser;
+      } else {
+        throw new WebApplicationException(403);
+      }
+
     } catch (NoResultException ex) {
       throw new WebApplicationException(403);
+    } finally {
+      em.getTransaction().commit();
+    }
+  }
+
+  public MultiTenancyUser signup(MultiTenancyUser user) {
+    em.getTransaction().begin();
+    try {
+      em.createNamedQuery("MultiTenancyUser.checkExisting", Long.class)
+        .setParameter("username", user.getUsername())
+        .setParameter("email", user.getEmail())
+        .getSingleResult();
+      throw new WebApplicationException(409);
+    } catch (NoResultException ex) {
+      em.persist(user);
+      return user;
     } finally {
       em.getTransaction().commit();
     }
@@ -49,5 +68,11 @@ public class MultiTenancyUserDao implements AutoCloseable {
     } catch (NoResultException ex) {
       throw new WebApplicationException(403);
     }
+  }
+
+  private MultiTenancyUser getUserByUsername(String username) {
+    return em.createNamedQuery("MultiTenancyUser.byUsername", MultiTenancyUser.class)
+      .setParameter("username", username)
+      .getSingleResult();
   }
 }
