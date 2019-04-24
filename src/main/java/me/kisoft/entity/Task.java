@@ -6,12 +6,13 @@
 package me.kisoft.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.kisoft.dao.IssueDao;
 import me.kisoft.dao.Storeable;
+import me.kisoft.dao.TaskDao;
 import org.dizitart.no2.NitriteId;
 import org.dizitart.no2.objects.Id;
 
@@ -22,18 +23,30 @@ import org.dizitart.no2.objects.Id;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Issue implements Serializable, Storeable<IssueDao> {
+public class Task implements Serializable, Storeable<TaskDao> {
 
   @Id
-  private NitriteId IssueId;
+  private NitriteId infologEntryId;
 
-  private EisenhowerStatus currentStatus;
+  private String title;
 
-  private Set<Action> actions;
+  private String description;
+
+  private Long percentComplete;
+
+  private boolean completed;
+
+  private Date completionDate;
+
+  private Set<Long> relatedIssues;
+
+  private Date dueDate;
+
+  private boolean reminder;
 
   @Override
-  public IssueDao getDao() {
-    return new IssueDao();
+  public TaskDao getDao() {
+    return new TaskDao();
   }
 
 }

@@ -19,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 import me.kisoft.dao.NitriteDao;
 import me.kisoft.entity.Action;
-import me.kisoft.entity.Id;
+import me.kisoft.entity.EntityId;
 import me.kisoft.entity.Issue;
 import me.kisoft.entity.multitenancy.Secured;
 
@@ -84,7 +84,7 @@ public class IssueService {
   @Produces({MediaType.APPLICATION_JSON})
   @Consumes({MediaType.APPLICATION_JSON})
   @Secured
-  public Id createIssue(@Context SecurityContext sc, Issue issue) {
+  public EntityId createIssue(@Context SecurityContext sc, Issue issue) {
     return NitriteDao.of(sc, Issue.class).createIssue(issue);
   }
 }

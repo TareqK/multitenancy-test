@@ -20,11 +20,11 @@ import org.dizitart.no2.NitriteId;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Id implements Serializable {
+public class EntityId implements Serializable {
 
   private long id;
 
-  public static Id of(NitriteId id) {
-    return new Id(id.getIdValue());
+  public static EntityId of(NitriteId id) {
+    return new EntityId(id.getIdValue());
   }
 }

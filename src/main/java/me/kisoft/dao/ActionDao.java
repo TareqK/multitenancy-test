@@ -8,7 +8,7 @@ package me.kisoft.dao;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import me.kisoft.entity.Action;
-import me.kisoft.entity.Id;
+import me.kisoft.entity.EntityId;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 /**
@@ -26,8 +26,8 @@ public class ActionDao extends NitriteDao {
     return db.getRepository(Action.class).find().toList();
   }
 
-  public Id createAction(Action action) {
-    return Id.of(db.getRepository(Action.class).insert(action).iterator().next());
+  public EntityId createAction(Action action) {
+    return EntityId.of(db.getRepository(Action.class).insert(action).iterator().next());
   }
 
   public void updateAction(Action action, long actionId) {

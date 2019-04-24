@@ -9,7 +9,7 @@ import java.util.List;
 import javax.ws.rs.WebApplicationException;
 import me.kisoft.entity.Action;
 import me.kisoft.entity.EisenhowerStatus;
-import me.kisoft.entity.Id;
+import me.kisoft.entity.EntityId;
 import me.kisoft.entity.Issue;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
@@ -37,8 +37,8 @@ public class IssueDao extends NitriteDao {
     }
   }
 
-  public Id createIssue(Issue issue) {
-    return Id.of(db.getRepository(Issue.class).insert(issue).iterator().next());
+  public EntityId createIssue(Issue issue) {
+    return EntityId.of(db.getRepository(Issue.class).insert(issue).iterator().next());
   }
 
   public void updateIssue(Issue issue, long issueId) {
